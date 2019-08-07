@@ -4,15 +4,15 @@
     <tr>
       <th>Title</th>
       <th>Body</th>
-<th></th>
-    </tr>
+      <th></th>
+   </tr>
   </thead>
   <tbody>
 <%= for post <- @posts do %>
     <tr>
       <td><%= post.title %></td>
       <td><%= post.body %></td>
-<td class="text-right">
+      <td class="text-right">
         <%= link "Show", to: user_post_path(@conn, :show, @user, post), class: "btn btn-default btn-xs" %>
         <%= link "Edit", to: user_post_path(@conn, :edit, @user, post), class: "btn btn-default btn-xs" %>
         <%= link "Delete", to: user_post_path(@conn, :delete, @user, post), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
