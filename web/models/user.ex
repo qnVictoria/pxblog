@@ -6,6 +6,8 @@ defmodule Pxblog.User do
     field :username, :string
     field :email, :string
     field :password_digest, :string
+    has_many :posts, Pxblog.Post
+    belongs_to :role, Pxblog.Role
 
     timestamps()
     # Virtual Fields
@@ -17,12 +19,12 @@ defmodule Pxblog.User do
   Builds a changeset based on the `struct` and `params`.
   """
   def changeset(struct, params \\ %{}) do
-    struct
-    |> cast(params, [:username, :email, :password, :password_confirmation])
-    |> validate_required([:username, :email, :password, :password_confirmation])
-    |> hash_password
+      struct
+      |> cast(params, [:username, :email, :password, :password_confirmation, :role_id])
+      |> validate_required([:username, :email, :password, :password_confirmation, :role_id])
+      |> hash_password
   end
-
+  
   defp hash_password(changeset) do
     if password = get_change(changeset, :password) do
       changeset
