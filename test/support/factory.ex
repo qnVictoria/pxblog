@@ -11,6 +11,7 @@ defmodule Pxblog.Factory do
       admin: false
     }
   end
+
   def user_factory do
     %User{
       username: sequence(:username, &"User #{&1}"),
@@ -21,6 +22,7 @@ defmodule Pxblog.Factory do
       role: build(:role)
     }
   end
+  
   def post_factory do
     %Post{
       title: "Some Post",
