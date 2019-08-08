@@ -8,6 +8,5 @@ defmodule Pxblog.Repo.Migrations.CreateRole do
 
       timestamps()
     end
-
   end
 end
