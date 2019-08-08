@@ -15,15 +15,15 @@ defmodule Pxblog.ModelCase do
   use ExUnit.CaseTemplate
 
   using do
-    quote do
-      alias Pxblog.Repo
-
-      import Ecto
-      import Ecto.Changeset
-      import Ecto.Query
-      import Pxblog.ModelCase
-    end
+  quote do
+    alias Pxblog.Repo
+    import Ecto
+    import Ecto.Changeset
+    import Ecto.Query
+    import Pxblog.ModelCase
+    import Pxblog.Factory
   end
+end
 
   setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Pxblog.Repo)
