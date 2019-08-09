@@ -1,5 +1,6 @@
 defmodule Pxblog.RoleCheckerTest do
   use Pxblog.ModelCase
+  
   alias Pxblog.TestHelper
   alias Pxblog.RoleChecker
 
