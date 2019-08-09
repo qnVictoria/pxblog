@@ -1,5 +1,6 @@
 defmodule Pxblog.SessionController do
   use Pxblog.Web, :controller
+
   alias Pxblog.User
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
 

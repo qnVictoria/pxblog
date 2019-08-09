@@ -2,6 +2,7 @@ defmodule Pxblog.PostController do
   use Pxblog.Web, :controller
   plug :assign_user
   plug :authorize_user when action in [:new, :create, :update, :edit, :delete]
+  plug :set_authorization_flag
 
   alias Pxblog.Post
 
@@ -34,8 +35,11 @@ defmodule Pxblog.PostController do
   end
 
   def show(conn, %{"id" => id}) do
-    post = Repo.get!(assoc(conn.assigns[:user], :posts), id)
-    render(conn, "show.html", post: post)
+    post = Repo.get!(assoc(conn.assigns[:user], :posts), id)|> Repo.preload(:comments)
+    comment_changeset = post
+      |> build_assoc(:comments)
+      |> Pxblog.Comment.changeset()
+    render(conn, "show.html", post: post, comment_changeset: comment_changeset)
   end
 
   def edit(conn, %{"id" => id}) do
@@ -67,6 +71,15 @@ defmodule Pxblog.PostController do
     |> redirect(to: user_post_path(conn, :index, conn.assigns[:user]))
   end
 
+  defp is_authorized_user?(conn) do
+    user = get_session(conn, :current_user)
+    (user && (Integer.to_string(user.id) == conn.params["user_id"] || Pxblog.RoleChecker.is_admin?(user)))
+  end
+
+  defp set_authorization_flag(conn, _opts) do
+    assign(conn, :author_or_admin, is_authorized_user?(conn))
+  end
+
   defp assign_user(conn, _opts) do
     case conn.params do
       %{"user_id" => user_id} ->
@@ -85,15 +98,14 @@ defmodule Pxblog.PostController do
     |> halt
   end
 
-  defp authorize_user(conn, _) do
-    user = get_session(conn, :current_user)
-    if user && (Integer.to_string(user.id) == conn.params["user_id"] || Pxblog.RoleChecker.is_admin?(user)) do
+  defp authorize_user(conn, _opts) do
+    if is_authorized_user?(conn) do
       conn
     else
       conn
       |> put_flash(:error, "You are not authorized to modify that post!")
       |> redirect(to: page_path(conn, :index))
-      |> halt()
+      |> halt
     end
   end
 end
