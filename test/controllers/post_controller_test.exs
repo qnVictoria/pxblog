@@ -1,5 +1,7 @@
 defmodule Pxblog.PostControllerTest do
   use Pxblog.ConnCase
+  require IEx
+
 
   alias Pxblog.Post
   alias Pxblog.TestHelper
@@ -25,11 +27,6 @@ defmodule Pxblog.PostControllerTest do
 
   defp logout_user(conn, user) do
     delete conn, session_path(conn, :delete, user)
-  end
-
-  test "lists all entries on index", %{conn: conn, user: user} do
-    conn = get conn, user_post_path(conn, :index, user)
-    assert html_response(conn, 200) =~ "Listing posts"
   end
 
   test "renders form for new resources", %{conn: conn, user: user} do
