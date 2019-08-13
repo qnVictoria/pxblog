@@ -38,6 +38,7 @@ defmodule Pxblog.Mixfile do
       {:phoenix_html, "~> 2.6.0"},
       {:phoenix_live_reload, "~> 1.0.0", only: :dev},
       {:gettext, "~> 0.11.0"},
+      {:distillery, "~> 1.5", runtime: false},
       {:cowboy, "~> 1.0.0"},
       {:comeonin, "~> 2.3"},
       {:ex_machina, "~> 1.0"},
