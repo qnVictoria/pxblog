@@ -16,7 +16,7 @@
     "css-brunch": "~2.0.0",
     "foundation-sites": "^6.5.3",
     "javascript-brunch": "~2.0.0",
-    "jquery": "^2.2.4",
+    "jquery": "^3.5.0",
     "motion-ui": "^2.0.3",
     "sass-brunch": "^2.10.8",
     "uglify-js-brunch": "~2.0.1"
